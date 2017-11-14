@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.UsersMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.entity.Users">
+    <constructor>
+      <idArg column="Id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Password" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from users
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssm.entity.Users" useGeneratedKeys="true" keyProperty="id">
+    insert into users (Phone, Email, 
+      Password)
+    values (#{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}) 
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.entity.Users">
+    update users
+    set Phone = #{phone,jdbcType=VARCHAR},
+      Email = #{email,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select Id, Phone, Email, Password
+    from users
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select Id, Phone, Email, Password
+    from users
+  </select>
+   <select id="selectByPhone" parameterType="com.ssm.entity.Users" resultType='java.lang.Integer'>
+    select Id from users where Phone = #{phone,jdbcType=VARCHAR} and Password = #{password,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByEmail" parameterType="com.ssm.entity.Users" resultType='java.lang.Integer'>
+    select Id from users where Email = #{email,jdbcType=VARCHAR} and Password = #{password,jdbcType=VARCHAR}
+  </select>
+  <select id="checkedPhone" parameterType="java.lang.String" resultType='java.lang.Integer'>
+  	select Id from users where Phone = #{phone,jdbcType=VARCHAR}
+  </select>
+   <select id="checkedEmail" parameterType="java.lang.String" resultType='java.lang.Integer'>
+  	select Id from users where Email = #{email,jdbcType=VARCHAR}
+  </select>
+  <select id="adminLogin" parameterType="java.lang.String" resultType='java.lang.Integer'>
+  	select Id from users where Phone = #{phone,jdbcType=VARCHAR} and Password = #{password,jdbcType=VARCHAR}
+  </select>
+</mapper>

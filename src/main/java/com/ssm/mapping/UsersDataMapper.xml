@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.UsersDataMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.entity.UsersData">
+    <constructor>
+      <idArg column="Id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="UsersId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="UserImage" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="OccupationId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Introduction" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ArticlesAll" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="AcommentsAll" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Allturns" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Experience" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Grade" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from users_data
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssm.entity.UsersData"  useGeneratedKeys="true" keyProperty="id">
+    insert into users_data (Id, UsersId, UserImage, 
+      Name, OccupationId, Introduction, 
+      ArticlesAll, AcommentsAll, Allturns, 
+      Experience, Grade)
+    values (#{id,jdbcType=INTEGER}, #{usersid,jdbcType=INTEGER}, #{userimage,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{occupationid,jdbcType=INTEGER}, #{introduction,jdbcType=VARCHAR}, 
+      #{articlesall,jdbcType=INTEGER}, #{acommentsall,jdbcType=INTEGER}, #{allturns,jdbcType=INTEGER}, 
+      #{experience,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.entity.UsersData">
+    update users_data
+    set
+      Name = #{name,jdbcType=VARCHAR},
+      OccupationId = #{occupationid,jdbcType=INTEGER},
+      Introduction = #{introduction,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select Id, UsersId, UserImage, Name, OccupationId, Introduction, ArticlesAll, AcommentsAll, 
+    Allturns, Experience, Grade
+    from users_data
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select Id, UsersId, UserImage, Name, OccupationId, Introduction, ArticlesAll, AcommentsAll, 
+    Allturns, Experience, Grade
+    from users_data
+  </select>
+  <!-- 通过用户的id 得到用户的信息 -->
+   <select id="getUserDataByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select Id, UsersId, UserImage, Name, OccupationId, Introduction, ArticlesAll, AcommentsAll, 
+    Allturns, Experience, Grade
+    from users_data where UsersId = #{usersid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByExperienceDesc" resultMap="BaseResultMap">
+  select * from users_data ORDER BY Experience DESC limit 3
+  </select>
+  <select id="selectExperienceByUsersId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  select  Experience
+    from users_data where UsersId = #{usersid,jdbcType=INTEGER}
+  </select>
+  <select id="selectArticlesAllByUsersId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  select  ArticlesAll
+    from users_data where UsersId = #{usersid,jdbcType=INTEGER}
+  </select>
+  <update id="updateArticlesAllByUsersId" parameterType="com.ssm.entity.UsersData">
+  update users_data
+    set ArticlesAll = #{articlesall,jdbcType=INTEGER},
+      Experience = #{experience,jdbcType=INTEGER}
+    where UsersId = #{usersid,jdbcType=INTEGER}
+  </update>
+</mapper>

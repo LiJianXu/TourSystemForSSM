@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.TurnsMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.entity.Turns">
+    <constructor>
+      <idArg column="Id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="ArticleId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="TurnUserId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="CreateTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from turns
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssm.entity.Turns">
+    insert into turns (Id, ArticleId, TurnUserId, 
+      CreateTime)
+    values (#{id,jdbcType=INTEGER}, #{articleid,jdbcType=INTEGER}, #{turnuserid,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.entity.Turns">
+    update turns
+    set ArticleId = #{articleid,jdbcType=INTEGER},
+      TurnUserId = #{turnuserid,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select Id, ArticleId, TurnUserId, CreateTime
+    from turns
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select Id, ArticleId, TurnUserId, CreateTime
+    from turns
+  </select>
+  <select id="checkTurnsByUserDataId" resultMap="BaseResultMap" parameterType="com.ssm.entity.Turns">
+  	select Id, ArticleId, TurnUserId, CreateTime
+    from turns where ArticleId = #{articleid,jdbcType=INTEGER} and TurnUserId = #{turnuserid,jdbcType=INTEGER}
+  </select>
+</mapper>

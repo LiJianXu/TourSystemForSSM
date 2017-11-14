@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.ArticlesMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.entity.Articles">
+    <constructor>
+      <idArg column="Id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Introduction" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Contents" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="EditContentType" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="CreateTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="UpdateTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="Good" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Bad" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Browses" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="UserDateId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="IsTurn" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Labels" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="StateId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="TypeId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <resultMap type="com.ssm.entity.Articles" id="simpleArticles">
+  <result property="id" column="Id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+  <result property="title" column="Title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  <result property="createtime" column="CreateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+  <association property="articleType" javaType="com.ssm.entity.ArticleType">
+  <result property="id" column="id2" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+  <result property="name" column="Name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  </association>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from articles
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssm.entity.Articles" useGeneratedKeys="true" keyProperty="id">
+    insert into articles (Id, Title, Introduction, 
+      Contents, EditContentType, CreateTime, 
+      UpdateTime, Good, Bad, 
+      Browses, UserDateId, IsTurn, 
+      Labels, StateId, TypeId)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, 
+      #{contents,jdbcType=VARCHAR}, #{editcontenttype,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{good,jdbcType=INTEGER}, #{bad,jdbcType=INTEGER}, 
+      #{browses,jdbcType=INTEGER}, #{userdateid,jdbcType=INTEGER}, #{isturn,jdbcType=INTEGER}, 
+      #{labels,jdbcType=VARCHAR}, #{stateid,jdbcType=INTEGER}, #{typeid,jdbcType=INTEGER} )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.entity.Articles">
+    update articles
+    set Title = #{title,jdbcType=VARCHAR},
+      Introduction = #{introduction,jdbcType=VARCHAR},
+      Contents = #{contents,jdbcType=VARCHAR},
+      EditContentType = #{editcontenttype,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      UpdateTime = #{updatetime,jdbcType=TIMESTAMP},
+      Good = #{good,jdbcType=INTEGER},
+      Bad = #{bad,jdbcType=INTEGER},
+      Browses = #{browses,jdbcType=INTEGER},
+      UserDateId = #{userdateid,jdbcType=INTEGER},
+      IsTurn = #{isturn,jdbcType=INTEGER},
+      Labels = #{labels,jdbcType=VARCHAR},
+      StateId = #{stateid,jdbcType=INTEGER}
+      TypeId = #{typeid,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select a.Id, Title, Introduction, Contents, EditContentType, CreateTime, UpdateTime, 
+    Good, Bad, Browses, UserDateId, IsTurn, Labels, StateId, TypeId
+    from articles as a join article_state  as a_s
+    where a.StateId=a_s.id and a_s.id=3 and a.Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select a.Id, Title, Introduction, Contents, EditContentType, CreateTime, UpdateTime, 
+    Good, Bad, Browses, UserDateId, IsTurn, Labels, StateId, TypeId
+    from articles as a join article_state  as a_s
+    where a.StateId=a_s.id and a_s.id=3 and a.Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCategoryId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select a.Id, Title, Introduction, Contents, EditContentType, CreateTime, UpdateTime, 
+    Good, Bad, Browses, UserDateId, IsTurn, Labels, StateId, TypeId
+    from articles as a join articles_category_r as c where a.Id=c.ArticleId and a.StateId=3 and c.CategoryId = #{categoryId,jdbcType=INTEGER} 
+  </select>
+  <update id="assessArticlesAdd"  parameterType="com.ssm.entity.Articles">
+  	    update articles
+    set 
+      Good = #{good,jdbcType=INTEGER},
+      Bad = #{bad,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByUserDataId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  select a.Id, Title, Introduction, Contents, EditContentType, CreateTime, UpdateTime, 
+    Good, Bad, Browses, UserDateId, IsTurn, Labels, StateId, TypeId
+    from articles as a join article_state  as a_s
+    where a.StateId=a_s.id and a_s.id=3 and UserDateId = #{userdateid,jdbcType=INTEGER}
+  </select>
+  <select id="selectSimpleArticleByUserId" resultMap="simpleArticles" parameterType="java.lang.Integer">
+    select a.Id, Title,  CreateTime ,a_t.Id as id2 ,a_t.`Name`
+    from articles as a join article_state  as a_s JOIN article_type AS a_t
+    where a.StateId=a_s.id and a_s.id=3 and  a_t.Id = a.TypeId AND  UserDateId  = #{userdateid,jdbcType=INTEGER}
+  </select>
+  <!-- 删除文章 -->
+  <update id="deleteById" parameterType="java.lang.Integer">
+  update articles set StateId = 1
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

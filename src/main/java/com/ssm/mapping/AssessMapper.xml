@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.AssessMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.entity.Assess">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="article_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="users_data_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="assess_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="assess_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from assess
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssm.entity.Assess">
+    insert into assess (id, article_id, users_data_id, 
+      assess_type, assess_date)
+    values (#{id,jdbcType=INTEGER}, #{articleId,jdbcType=INTEGER}, #{usersDataId,jdbcType=INTEGER}, 
+      #{assessType,jdbcType=INTEGER}, #{assessDate,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.entity.Assess">
+    update assess
+    set article_id = #{articleId,jdbcType=INTEGER},
+      users_data_id = #{usersDataId,jdbcType=INTEGER},
+      assess_type = #{assessType,jdbcType=INTEGER},
+      assess_date = #{assessDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, article_id, users_data_id, assess_type, assess_date
+    from assess
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, article_id, users_data_id, assess_type, assess_date
+    from assess
+  </select>
+  <select id="checkAssessUserDataId" parameterType="com.ssm.entity.Assess" resultMap="BaseResultMap">
+  select id, article_id, users_data_id, assess_type, assess_date
+    from assess where article_id = #{articleId,jdbcType=INTEGER} and users_data_id = #{usersDataId,jdbcType=INTEGER} 
+  </select>
+</mapper>

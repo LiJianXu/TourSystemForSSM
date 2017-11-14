@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.ArticlesCategoryRMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.entity.ArticlesCategoryR">
+    <constructor>
+      <idArg column="Id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="CategoryId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="ArticleId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from articles_category_r
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssm.entity.ArticlesCategoryR" useGeneratedKeys="true" keyProperty="id">
+    insert into articles_category_r (Id, CategoryId, ArticleId
+      )
+    values (#{id,jdbcType=INTEGER}, #{categoryid,jdbcType=INTEGER}, #{articleid,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.entity.ArticlesCategoryR">
+    update articles_category_r
+    set CategoryId = #{categoryid,jdbcType=INTEGER},
+      ArticleId = #{articleid,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select Id, CategoryId, ArticleId
+    from articles_category_r
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select Id, CategoryId, ArticleId
+    from articles_category_r
+  </select>
+</mapper>

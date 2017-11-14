@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.CollectionsMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.entity.Collections">
+    <constructor>
+      <idArg column="Id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="ArticleId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="UserDateId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="CreateTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="ArticleTitle" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  
+  <resultMap type="com.ssm.entity.Collections" id="CollectionsArticleResult">
+  <result property="id" column="Id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+  <result property="articleid" column="ArticleId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+  <result property="userdateid" column="UserDateId" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+  <result property="createtime" column="CreateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+  <result property="articletitle" column="ArticleTitle" javaType="java.lang.String" jdbcType="VARCHAR" />
+  <association property="articleType" javaType="com.ssm.entity.ArticleType">
+  <result property="id" column="id2" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+  <result property="name" column="Name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+  </association>
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from collections
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssm.entity.Collections">
+    insert into collections (Id, ArticleId, UserDateId, 
+      CreateTime, ArticleTitle)
+    values (#{id,jdbcType=INTEGER}, #{articleid,jdbcType=INTEGER}, #{userdateid,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{articletitle,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.entity.Collections">
+    update collections
+    set ArticleId = #{articleid,jdbcType=INTEGER},
+      UserDateId = #{userdateid,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      ArticleTitle = #{articletitle,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select Id, ArticleId, UserDateId, CreateTime, ArticleTitle
+    from collections
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select Id, ArticleId, UserDateId, CreateTime, ArticleTitle
+    from collections
+  </select>
+  <select id="checkCollectionsByUserDataId" resultMap="BaseResultMap" parameterType="com.ssm.entity.Collections">
+  	select Id, ArticleId, UserDateId, CreateTime, ArticleTitle
+    from collections where ArticleId = #{articleid,jdbcType=INTEGER} and UserDateId = #{userdateid,jdbcType=INTEGER}
+  </select>
+  <select id="getCollectionsByUserDataId" parameterType="java.lang.Integer" resultMap="CollectionsArticleResult">
+  SELECT co.Id,co.ArticleId,co.UserDateId,co.ArticleTitle,co.CreateTime,a_t.Id as id2,a_t.`Name` FROM collections as co INNER JOIN articles as ar INNER JOIN article_type as a_t where co.ArticleId = ar.Id AND ar.TypeId =a_t.Id and co.UserDateId = #{userdateid,jdbcType=INTEGER} 
+  </select>
+</mapper>
