@@ -17,6 +17,7 @@ public class AdminControl {
 	@Autowired
 	private UsersService usersService;
 	
+	
 	@RequestMapping(value="enter.do",method=RequestMethod.GET)
 	public String enterAdmin(){
 		return "adminLogin";
