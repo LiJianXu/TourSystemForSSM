@@ -156,6 +156,13 @@ public class UsersService {
 		}else{
 			return false;
 		}
-		
+	}
+	
+	public boolean updateUser(String password){
+		if(usersMapper.updateAdmin(password)>0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

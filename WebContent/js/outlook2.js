@@ -37,7 +37,18 @@ function InitLeftMenu() {
 }
 
 function addTab(subtitle,url){
-	if(!$('#tabs').tabs('exists',subtitle)){
+	$('.tabs-inner span').each(function(i,n){
+		var t = $(n).text();
+		$('#tabs').tabs('close',t);
+	});
+	$('#tabs').tabs('add',{
+		title:subtitle,
+		content:createFrame(url),
+		closable:true,
+		width:$('#mainPanle').width()-10,
+		height:$('#mainPanle').height()-26
+	});
+	/*if(!$('#tabs').tabs('exists',subtitle)){
 		$('#tabs').tabs('add',{
 			title:subtitle,
 			content:createFrame(url),
@@ -47,8 +58,11 @@ function addTab(subtitle,url){
 		});
 	}else{
 		$('#tabs').tabs('select',subtitle);
+		var tab = $('#tabs').tabs('getSelected');  // get selected panel
+		alert(url);
+		tab.panel('refresh', url);
 	}
-	tabClose();
+	tabClose();*/
 }
 
 function createFrame(url)

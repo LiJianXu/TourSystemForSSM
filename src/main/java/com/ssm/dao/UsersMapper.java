@@ -48,4 +48,11 @@ public interface UsersMapper {
      * @return
      */
     Integer adminLogin(Users user);
+    
+    /**
+     * 更新管理员密码
+     * @param password
+     * @return
+     */
+    Integer updateAdmin(String password);
 }

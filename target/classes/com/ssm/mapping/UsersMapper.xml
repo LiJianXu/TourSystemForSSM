@@ -19,11 +19,15 @@
     values (#{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}) 
   </insert>
+  
   <update id="updateByPrimaryKey" parameterType="com.ssm.entity.Users">
     update users
     set Phone = #{phone,jdbcType=VARCHAR},
       Email = #{email,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateAdmin" parameterType="java.lang.String">
+    UPDATE users SET users.`Password` = #{password,jdbcType=VARCHAR} where users.Id = 19
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select Id, Phone, Email, Password
@@ -49,4 +53,5 @@
   <select id="adminLogin" parameterType="java.lang.String" resultType='java.lang.Integer'>
   	select Id from users where Phone = #{phone,jdbcType=VARCHAR} and Password = #{password,jdbcType=VARCHAR}
   </select>
+  
 </mapper>

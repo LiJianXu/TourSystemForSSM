@@ -35,23 +35,23 @@
 	var _menus = {
 		"menus" : [
 			{
-				"menuid" : "2",
+				"menuid" : "1",
 				"icon" : "icon-sys",
 				"menuname" : "博客管理",
 				"menus" : [ {
 					"menuname" : "博客管理",
 					"icon" : "icon-nav",
-					"url" : "articleManage.jsp"
+					"url" : "${pageContext.request.contextPath}/admin/articleManage.do"
 				}
 				]
 			}, {
-				"menuid" : "3",
+				"menuid" : "2",
 				"icon" : "icon-sys",
 				"menuname" : "用户管理",
 				"menus" : [ {
 					"menuname" : "用户管理",
 					"icon" : "icon-nav",
-					"url" : "demo.html"
+					"url" : "${pageContext.request.contextPath}/admin/userManage.do"
 				}
 				]
 			}
@@ -93,11 +93,15 @@
 				return false;
 			}
 
-			$.post('/ajax/editpassword.ashx?newpass=' + newpass.val(), function(msg) {
-				msgShow('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + msg, 'info');
+			$.post('${pageContext.request.contextPath}/admin/update.do?newPassword=' + newpass.val(), function(msg) {
+				if(msg.state){
+				msgShow('系统提示', msg.describe, 'info');
 				newpass.val('');
 				rePass.val('');
 				close();
+				}else{
+				msgShow('系统提示', msg.describe, 'info');
+				}
 			})
 
 		}
@@ -160,10 +164,14 @@
 		style="background: #eee; overflow-y:hidden">
 		<div id="tabs" class="easyui-tabs" fit="true" border="false">
 			<div title="欢迎使用" style="padding:20px;overflow:hidden;" id="home">
-
 				<h1>欢迎使用"我的博客"后台管理系统</h1>
-
 			</div>
+<!--  			<div title="文章管理" style="padding:20px;overflow:hidden;" id="article">
+				<h1>文章</h1>
+			</div>
+			<div title="用户管理" style="padding:20px;overflow:hidden;" id="user">
+				<h1>用户</h1>
+			</div>  -->
 		</div>
 	</div>
 
