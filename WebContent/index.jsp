@@ -16,6 +16,9 @@
 	href="${pageContext.request.contextPath }/css/pagination.css" />
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/js/jquery.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery.pagination.js"></script>
+
 <style>
 .row {
 	margin-right: 0px;
@@ -63,7 +66,8 @@
 </style>
 
 <script type="text/javascript">
-		$.getJSON(
+$(function(){
+$.getJSON(
 			"${pageContext.request.contextPath}/category/get_categorys.do",
 			function(data) {
 				if(data.state){
@@ -164,6 +168,8 @@
 					"</div>");
 			});
 		})
+})
+		
 </script>
 
 <body>

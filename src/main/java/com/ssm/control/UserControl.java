@@ -106,17 +106,12 @@ public class UserControl {
 	 * @param httpSession
 	 */
 	@RequestMapping(value="out.do",method=RequestMethod.GET)
-	public void OutLogin(HttpServletResponse httpServletResponse,HttpSession httpSession){
+	public String OutLogin(HttpSession httpSession){
 		if(httpSession.getAttribute("userdata")!=null){
 			httpSession.setAttribute("userdata", null);
 			System.out.println("用户退出登录");
 		}
-		try {
-			httpServletResponse.sendRedirect("../index.jsp");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		return "redirect:/index.jsp";
 	}
 	
 	/**

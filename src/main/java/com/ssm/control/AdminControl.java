@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ssm.entity.JSON;
 import com.ssm.entity.Users;
 import com.ssm.service.UsersService;
 
@@ -45,5 +46,20 @@ public class AdminControl {
 			e.printStackTrace();
 		}
 		return "adminLogin";
+	}
+	
+	public JSON updateAdmin(){
+		JSON json = new JSON();
+		return json;
+	}
+	
+	@RequestMapping(value="articleManage.do",method=RequestMethod.GET)
+	public String intoArticleManage(){
+		return "articleManage";
+	}
+	
+	@RequestMapping(value="userManage.do",method=RequestMethod.GET)
+	public String intoUserManage(){
+		return "userManage";
 	}
 }

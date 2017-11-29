@@ -27,11 +27,6 @@
 			//验证登陆form表单
 			$('#login_form').bootstrapValidator({
 				message : 'This value is not valid',
-				feedbackIcons : {
-					valid : 'glyphicon glyphicon-ok',
-					invalid : 'glyphicon glyphicon-remove',
-					validating : 'glyphicon glyphicon-refresh'
-				},
 				fields : {
 					username : {
 						message : '用户名验证失败',
@@ -57,11 +52,6 @@
 			//验证注册表单
 			$('#register_form').bootstrapValidator({
 				message : 'This value is not valid',
-				feedbackIcons : {
-					valid : 'glyphicon glyphicon-ok',
-					invalid : 'glyphicon glyphicon-remove',
-					validating : 'glyphicon glyphicon-refresh'
-				},
 				fields : {
 					password : {
 						message : '密码验证失败',
@@ -296,16 +286,16 @@
 								style="margin-top: 20px;" id="register_form">
 								<div class="form-group">
 									<label class="col-sm-4 control-label">用户名</label>
-									<div class="col-sm-8">
+									<div class="col-sm-8" >
 										<input type="text" id="register_username" class="form-control"
-											placeholder="邮箱或者电话号码" name="username">
+											placeholder="邮箱或者电话号码" name="username"/>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-4 control-label">密码</label>
 									<div class="col-sm-8">
 										<input type="password" id="register_password"
-											class="form-control" name="password" placeholder="密码">
+											class="form-control" name="password" placeholder="密码"/>
 									</div>
 								</div>
 								<div class="form-group">
@@ -313,7 +303,7 @@
 									<div class="col-sm-8">
 										<input type="password" class="form-control"
 											name="confirmpassword" id="register_conf_password"
-											placeholder="确认密码">
+											placeholder="确认密码"/>
 									</div>
 								</div>
 								<div class="form-group">
