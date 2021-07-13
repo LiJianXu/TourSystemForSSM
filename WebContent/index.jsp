@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>首页</title>
+<title>首页1</title>
 </head>
 
 <!-- 引用验证框架的css -->
